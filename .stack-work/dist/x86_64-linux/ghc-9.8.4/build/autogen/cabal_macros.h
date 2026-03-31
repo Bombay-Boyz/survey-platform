@@ -50,6 +50,16 @@
   (major1) == 0 && (major2) <  12 || \
   (major1) == 0 && (major2) == 12 && (minor) <= 1)
 #endif /* MIN_VERSION_bytestring */
+/* package cassava-0.5.4.0 */
+#ifndef VERSION_cassava
+#define VERSION_cassava "0.5.4.0"
+#endif /* VERSION_cassava */
+#ifndef MIN_VERSION_cassava
+#define MIN_VERSION_cassava(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  5 || \
+  (major1) == 0 && (major2) == 5 && (minor) <= 4)
+#endif /* MIN_VERSION_cassava */
 /* package containers-0.6.8 */
 #ifndef VERSION_containers
 #define VERSION_containers "0.6.8"
@@ -283,10 +293,10 @@
 #endif /* MIN_TOOL_VERSION_strip */
 
 #ifndef CURRENT_PACKAGE_KEY
-#define CURRENT_PACKAGE_KEY "survey-platform-0.1.0.0-FNfjCQ592Sb8uiGbrEniKu"
+#define CURRENT_PACKAGE_KEY "survey-platform-0.1.0.0-Cem7bzyOP5N1TTVheQgNE2"
 #endif /* CURRENT_packageKey */
 #ifndef CURRENT_COMPONENT_ID
-#define CURRENT_COMPONENT_ID "survey-platform-0.1.0.0-FNfjCQ592Sb8uiGbrEniKu"
+#define CURRENT_COMPONENT_ID "survey-platform-0.1.0.0-Cem7bzyOP5N1TTVheQgNE2"
 #endif /* CURRENT_COMPONENT_ID */
 #ifndef CURRENT_PACKAGE_VERSION
 #define CURRENT_PACKAGE_VERSION "0.1.0.0"

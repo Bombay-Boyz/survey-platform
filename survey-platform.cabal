@@ -55,7 +55,8 @@ library
     yesod-form        >= 1.7    && < 1.8,
     yesod-persistent  >= 1.6    && < 1.7,
     blaze-html        >= 0.9    && < 0.10,
-    template-haskell  >= 2.20   && < 2.22
+    template-haskell  >= 2.20   && < 2.22,
+    cassava           >= 0.5.3
 
 executable survey-platform
   import:           shared-extensions
@@ -74,10 +75,13 @@ test-suite survey-test
   hs-source-dirs:   test
   other-modules:
     Model.SurveySpec
+    Logic.EngineSpec
+    Analytics.CSVSpec
   build-depends:
     base,
     survey-platform,
     containers,
+    bytestring,
     text,
     uuid,
     hspec            >= 2.11,

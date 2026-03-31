@@ -153,7 +153,7 @@
 #endif /* MIN_TOOL_VERSION_strip */
 
 #ifndef CURRENT_COMPONENT_ID
-#define CURRENT_COMPONENT_ID "survey-platform-0.1.0.0-HXmwCUsru4iLZYE1FlGhwU-survey-platform"
+#define CURRENT_COMPONENT_ID "survey-platform-0.1.0.0-H7TUl4DZZuVBrTuRn2HCUy-survey-platform"
 #endif /* CURRENT_COMPONENT_ID */
 #ifndef CURRENT_PACKAGE_VERSION
 #define CURRENT_PACKAGE_VERSION "0.1.0.0"

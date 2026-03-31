@@ -47,7 +47,7 @@ getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: 
 
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 bindir     = "/home/sn/survey-platform/.stack-work/install/x86_64-linux/2e874418177df08fb38d4c0455c88ea8676f779e1b1b6f0c1941547c6e86f05c/9.8.4/bin"
-libdir     = "/home/sn/survey-platform/.stack-work/install/x86_64-linux/2e874418177df08fb38d4c0455c88ea8676f779e1b1b6f0c1941547c6e86f05c/9.8.4/lib/x86_64-linux-ghc-9.8.4/survey-platform-0.1.0.0-HXmwCUsru4iLZYE1FlGhwU-survey-platform"
+libdir     = "/home/sn/survey-platform/.stack-work/install/x86_64-linux/2e874418177df08fb38d4c0455c88ea8676f779e1b1b6f0c1941547c6e86f05c/9.8.4/lib/x86_64-linux-ghc-9.8.4/survey-platform-0.1.0.0-H7TUl4DZZuVBrTuRn2HCUy-survey-platform"
 dynlibdir  = "/home/sn/survey-platform/.stack-work/install/x86_64-linux/2e874418177df08fb38d4c0455c88ea8676f779e1b1b6f0c1941547c6e86f05c/9.8.4/lib/x86_64-linux-ghc-9.8.4"
 datadir    = "/home/sn/survey-platform/.stack-work/install/x86_64-linux/2e874418177df08fb38d4c0455c88ea8676f779e1b1b6f0c1941547c6e86f05c/9.8.4/share/x86_64-linux-ghc-9.8.4/survey-platform-0.1.0.0"
 libexecdir = "/home/sn/survey-platform/.stack-work/install/x86_64-linux/2e874418177df08fb38d4c0455c88ea8676f779e1b1b6f0c1941547c6e86f05c/9.8.4/libexec/x86_64-linux-ghc-9.8.4/survey-platform-0.1.0.0"

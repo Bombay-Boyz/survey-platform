@@ -30,6 +30,16 @@
   (major1) == 4 && (major2) <  19 || \
   (major1) == 4 && (major2) == 19 && (minor) <= 2)
 #endif /* MIN_VERSION_base */
+/* package bytestring-0.12.1.0 */
+#ifndef VERSION_bytestring
+#define VERSION_bytestring "0.12.1.0"
+#endif /* VERSION_bytestring */
+#ifndef MIN_VERSION_bytestring
+#define MIN_VERSION_bytestring(major1,major2,minor) (\
+  (major1) <  0 || \
+  (major1) == 0 && (major2) <  12 || \
+  (major1) == 0 && (major2) == 12 && (minor) <= 1)
+#endif /* MIN_VERSION_bytestring */
 /* package containers-0.6.8 */
 #ifndef VERSION_containers
 #define VERSION_containers "0.6.8"
@@ -203,7 +213,7 @@
 #endif /* MIN_TOOL_VERSION_strip */
 
 #ifndef CURRENT_COMPONENT_ID
-#define CURRENT_COMPONENT_ID "survey-platform-0.1.0.0-EgpII9Ya26x8U77zH8leI9-survey-test"
+#define CURRENT_COMPONENT_ID "survey-platform-0.1.0.0-3PcxJ5ScEn7IqRzxwd3QyS-survey-test"
 #endif /* CURRENT_COMPONENT_ID */
 #ifndef CURRENT_PACKAGE_VERSION
 #define CURRENT_PACKAGE_VERSION "0.1.0.0"

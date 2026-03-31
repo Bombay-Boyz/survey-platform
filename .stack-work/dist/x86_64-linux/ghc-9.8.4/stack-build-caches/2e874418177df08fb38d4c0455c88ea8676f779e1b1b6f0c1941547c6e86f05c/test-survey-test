@@ -1,6 +1,10 @@
 /home/sn/survey-platform/survey-platform.cabal:
-  hash: 07c956ee5fe79d9935b40f93900070afa8dacfa22fcf72b13ee6cc37725ec86d
+  hash: 529107d46016b66a757891971e528012bdf527b86cc37298e46c93432ee1d17d
+/home/sn/survey-platform/test/Analytics/CSVSpec.hs:
+  hash: ef5f6e7ed2c6433d9d8fc68c8f75bd47f1dd7f0fb2b4e8f779fa4c5e5ab2d8b5
+/home/sn/survey-platform/test/Logic/EngineSpec.hs:
+  hash: 88ede38be35875c977d60e5dfb92b533f5fcefcb02627b137bd1de6924c7f6c6
 /home/sn/survey-platform/test/Model/SurveySpec.hs:
   hash: bc07b16d897210579ec341d607e292708b8a7099ed76dfc51c82ca8f1de9eec1
 /home/sn/survey-platform/test/Spec.hs:
-  hash: 79640f3204f9c0233c966f50d7367aa5c87a8c399ad5f5e5aabeaa735b355933
+  hash: 5ac335e096fb9d2aa8847e9cc0497da63238a8446baef593e29a9c1f3b0a42ac
