@@ -1,4 +1,22 @@
+# Stack build artifacts
 .stack-work/
+
+# Cabal build artifacts
+dist/
+dist-newstyle/
+
+# GHC object files
 *.o
 *.hi
-dist-newstyle/
+*.dyn_o
+*.dyn_hi
+
+# Editor artifacts
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS artifacts
+.DS_Store
+Thumbs.db
