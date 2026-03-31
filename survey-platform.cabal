@@ -33,12 +33,14 @@ library
     Types.Core
     Types.Logic
     Types.Survey
+    Types.Campaign
     Model
     Forms.Survey
     Foundation
     Logic.Engine
     Analytics.Engine
     Analytics.CSV
+    Distribution.Email
   build-depends:
     base                    >= 4.18,
     containers              >= 0.6,
@@ -59,7 +61,9 @@ library
     template-haskell        >= 2.20,
     cassava                 >= 0.5.3,
     monad-logger            >= 0.3,
-    resource-pool           >= 0.4
+    resource-pool           >= 0.4,
+    mime-mail               >= 0.5,
+    smtp-mail               >= 0.3
 
 executable survey-platform
   import:           shared-extensions
@@ -84,6 +88,7 @@ test-suite survey-test
     Logic.EngineSpec
     Analytics.CSVSpec
     Analytics.EngineSpec
+    Distribution.CampaignSpec
   build-depends:
     base,
     survey-platform,
@@ -91,6 +96,7 @@ test-suite survey-test
     text,
     bytestring,
     uuid,
+    time,
     hspec            >= 2.11,
     hspec-hedgehog   >= 0.0.1,
     hedgehog         >= 1.4,
