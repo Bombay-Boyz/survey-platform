@@ -27,8 +27,13 @@ qB = QuestionId (fromWords 0 0 0 2)
 -- ---------------------------------------------------------------------------
 
 csvLines :: BL.ByteString -> [String]
-csvLines = lines . filter (/= '\r') . map (toEnum . fromEnum)
-         . BL.unpack
+csvLines = lines . filter (/= '\r') . map (toEnum . fromEnum) . BL.unpack
+
+-- Safe: returns Nothing on empty output instead of throwing
+firstLine :: BL.ByteString -> Maybe String
+firstLine bs = case csvLines bs of
+  (l:_) -> Just l
+  []    -> Nothing
 
 -- ---------------------------------------------------------------------------
 -- Specs
@@ -40,32 +45,32 @@ spec = describe "Analytics.CSV" $ do
   describe "exportCSV" $ do
 
     it "produces a header row as the first line" $ do
-      let submissions = [(sid1, SubmissionAnswers (Map.singleton qA (AText "hello")))]
-          ls = csvLines (exportCSV submissions)
-      length ls `shouldSatisfy` (>= 1)
-      head ls `shouldSatisfy` ("submission_id" `isInfixOf`)
+      let s1 = SubmissionAnswers (Map.singleton qA (AText "hello"))
+      firstLine (exportCSV [(sid1, s1)])
+        `shouldSatisfy` maybe False ("submission_id" `isInfixOf`)
 
     it "produces one data row per submission" $ do
       let s1 = SubmissionAnswers (Map.singleton qA (AText "hello"))
           s2 = SubmissionAnswers (Map.singleton qA (AText "world"))
           ls = csvLines (exportCSV [(sid1, s1), (sid2, s2)])
-      -- header + 2 data rows = 3 lines minimum
+      -- header + 2 data rows = 3 lines
       length ls `shouldBe` 3
 
     it "empty field for a missing answer in a column" $ do
-      -- s1 has qA and qB; s2 has only qA → qB field for s2 should be empty
+      -- s1 answers both qA and qB; s2 answers only qA
+      -- the qB column for s2 must be an empty trailing field
       let s1 = SubmissionAnswers (Map.fromList [(qA, AText "x"), (qB, AText "y")])
           s2 = SubmissionAnswers (Map.singleton qA (AText "z"))
           ls = csvLines (exportCSV [(sid1, s1), (sid2, s2)])
-          -- last field of s2's row should be empty (trailing comma)
-          s2Row = ls !! 2
-      s2Row `shouldSatisfy` ("," `isSuffixOf`)
+      case drop 2 ls of
+        (s2Row:_) -> s2Row `shouldSatisfy` ("," `isSuffixOf`)
+        []        -> expectationFailure "expected at least 3 lines"
 
     it "column order is stable across calls" $ do
-      let s1 = SubmissionAnswers (Map.fromList [(qA, AText "a"), (qB, AText "b")])
-          out1 = csvLines (exportCSV [(sid1, s1)])
-          out2 = csvLines (exportCSV [(sid1, s1)])
-      head out1 `shouldBe` head out2
+      let s1   = SubmissionAnswers (Map.fromList [(qA, AText "a"), (qB, AText "b")])
+          hdr1 = firstLine (exportCSV [(sid1, s1)])
+          hdr2 = firstLine (exportCSV [(sid1, s1)])
+      hdr1 `shouldBe` hdr2
 
   describe "answersToField" $ do
     it "encodes AText"   $ answersToField (AText   "hi")  `shouldBe` "hi"
@@ -74,20 +79,22 @@ spec = describe "Analytics.CSV" $ do
     it "encodes ANumber" $ answersToField (ANumber 1.5)   `shouldBe` "1.5"
 
 -- ---------------------------------------------------------------------------
--- Local string predicates (avoid importing Data.List qualified)
+-- Local string predicates — no partial functions
 -- ---------------------------------------------------------------------------
 
 isInfixOf :: String -> String -> Bool
-isInfixOf needle haystack = any (isPrefixOf needle) (tails haystack)
+isInfixOf needle haystack =
+  any (isPrefixOf needle) (tails haystack)
 
 isSuffixOf :: String -> String -> Bool
-isSuffixOf suffix str = drop (length str - length suffix) str == suffix
+isSuffixOf suffix str =
+  drop (length str - length suffix) str == suffix
 
 isPrefixOf :: String -> String -> Bool
-isPrefixOf [] _         = True
-isPrefixOf _  []        = False
-isPrefixOf (x:xs)(y:ys) = x == y && isPrefixOf xs ys
+isPrefixOf []     _      = True
+isPrefixOf _      []     = False
+isPrefixOf (x:xs) (y:ys) = x == y && isPrefixOf xs ys
 
 tails :: [a] -> [[a]]
-tails []     = [[]]
+tails []          = [[]]
 tails xs@(_:rest) = xs : tails rest
