@@ -1,0 +1,13 @@
+# stack.yaml
+resolver: lts-23.28
+
+packages:
+  - .
+
+# These packages are in LTS-23.28 but we pin them explicitly
+# to avoid any ambiguity in resolution.
+extra-deps: []
+
+# Tell stack to use its own GHC, not your system ghc-9.14.1
+system-ghc: false
+install-ghc: true

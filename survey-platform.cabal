@@ -1,0 +1,86 @@
+cabal-version:      2.4
+name:               survey-platform
+version:            0.1.0.0
+description:        Survey and data collection platform (Phase 1)
+
+common shared-extensions
+  default-language: Haskell2010
+  default-extensions:
+    BangPatterns
+    DataKinds
+    DeriveGeneric
+    DerivingStrategies
+    ExistentialQuantification
+    FlexibleContexts
+    FlexibleInstances
+    GADTs
+    LambdaCase
+    MultiParamTypeClasses
+    OverloadedStrings
+    RecordWildCards
+    ScopedTypeVariables
+    StrictData
+    TypeFamilies
+    ViewPatterns
+  ghc-options:
+    -Wall
+    -Wno-unused-do-bind
+
+library
+  import:           shared-extensions
+  hs-source-dirs:   src
+  exposed-modules:
+    Types.Core
+    Types.Logic
+    Types.Survey
+    Model
+    Forms.Survey
+    Foundation
+    Logic.Engine
+    Analytics.CSV
+  build-depends:
+    base              >= 4.18   && < 5,
+    containers        >= 0.6    && < 0.8,
+    text              >= 2.0    && < 2.2,
+    time              >= 1.12   && < 1.15,
+    uuid              >= 1.3    && < 1.4,
+    aeson             >= 2.1    && < 2.3,
+    bytestring        >= 0.11   && < 0.13,
+    mtl               >= 2.3    && < 2.4,
+    transformers      >= 0.6    && < 0.7,
+    persistent        >= 2.14   && < 2.15,
+    persistent-template >= 2.12 && < 2.13,
+    persistent-postgresql >= 2.13 && < 2.15,
+    yesod-core        >= 1.6    && < 1.7,
+    yesod-form        >= 1.7    && < 1.8,
+    yesod-persistent  >= 1.6    && < 1.7,
+    blaze-html        >= 0.9    && < 0.10,
+    template-haskell  >= 2.20   && < 2.22
+
+executable survey-platform
+  import:           shared-extensions
+  main-is:          Main.hs
+  hs-source-dirs:   app
+  build-depends:
+    base,
+    survey-platform,
+    yesod-core,
+    warp
+
+test-suite survey-test
+  import:           shared-extensions
+  type:             exitcode-stdio-1.0
+  main-is:          Spec.hs
+  hs-source-dirs:   test
+  other-modules:
+    Model.SurveySpec
+  build-depends:
+    base,
+    survey-platform,
+    containers,
+    text,
+    uuid,
+    hspec            >= 2.11,
+    hspec-hedgehog   >= 0.0.1,
+    hedgehog         >= 1.4,
+    QuickCheck       >= 2.14
