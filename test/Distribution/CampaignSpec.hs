@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -Wno-orphans #-}
 module Distribution.CampaignSpec (spec) where
 
 import Data.Time              (UTCTime (..), fromGregorian, secondsToDiffTime)

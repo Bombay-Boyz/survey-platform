@@ -76,7 +76,8 @@ executable survey-platform
     warp,
     monad-logger,
     persistent-postgresql,
-    persistent
+    persistent,
+    bytestring
 
 test-suite survey-test
   import:           shared-extensions
