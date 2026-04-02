@@ -7,7 +7,7 @@ import Test.Hspec
 
 import Types.Core
 import Types.Survey              (Answer (..), SubmissionAnswers (..))
-import Analytics.Engine          (normalize, Filter (..))
+import Analytics.Engine          (NormalizedAnswer (..), normalize, Filter (..))
 import Analytics.Query
 
 sid1, sid2, sid3 :: SubmissionId

@@ -39,7 +39,9 @@ library
     Foundation
     Logic.Engine
     Analytics.Engine
+    Analytics.Query
     Analytics.CSV
+    Cache
     Distribution.Email
   build-depends:
     base                    >= 4.18,
@@ -60,6 +62,7 @@ library
     blaze-html              >= 0.9,
     template-haskell        >= 2.20,
     cassava                 >= 0.5.3,
+    stm                     >= 2.5,
     monad-logger            >= 0.3,
     resource-pool           >= 0.4,
     mime-mail               >= 0.5,
@@ -89,7 +92,9 @@ test-suite survey-test
     Logic.EngineSpec
     Analytics.CSVSpec
     Analytics.EngineSpec
+    Analytics.QuerySpec
     Distribution.CampaignSpec
+    Cache.CacheSpec
   build-depends:
     base,
     survey-platform,
@@ -98,6 +103,7 @@ test-suite survey-test
     bytestring,
     uuid,
     time,
+    stm,
     hspec            >= 2.11,
     hspec-hedgehog   >= 0.0.1,
     hedgehog         >= 1.4,

@@ -28,11 +28,6 @@ data Acc = Acc
 emptyAcc :: Acc
 emptyAcc = Acc 0 Map.empty []
 
--- | Summarise one question in a single pass over the answer list.
--- Complexity: O(N log V + N_n log N_n) where
---   N   = answers for this question
---   V   = distinct values
---   N_n = numeric answers (for median sort)
 summariseQuestion
   :: Filter -> QuestionId -> [NormalizedAnswer] -> QuestionSummary
 summariseQuestion flt qid answers =
@@ -46,7 +41,6 @@ summariseQuestion flt qid answers =
   where
     relevant = filter (\na -> evalFilter flt na && naQuestionId na == qid) answers
     acc      = foldl' step emptyAcc relevant
-
     step (Acc c freq nums) na =
       Acc (c + 1)
           (Map.insertWith (+) (naValue na) 1 freq)
@@ -54,8 +48,6 @@ summariseQuestion flt qid answers =
              VNumber n -> n : nums
              _         -> nums)
 
--- | Summarise all questions in one pass, grouping by QuestionId first.
--- Complexity: O(N log Q + sum_q O(N_q log N_q))
 summariseAll :: Filter -> [NormalizedAnswer] -> Map QuestionId QuestionSummary
 summariseAll flt answers =
   Map.mapWithKey (\qid nas -> summariseQuestion flt qid nas) grouped
