@@ -1,8 +1,9 @@
-{-# LANGUAGE QuasiQuotes   #-}
+{-# LANGUAGE QuasiQuotes     #-}
 {-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE TypeFamilies  #-}
+{-# LANGUAGE TypeFamilies    #-}
 module Foundation where
 
+import Data.Aeson                  (Value, object, (.=))
 import Data.Text                   (Text)
 import Data.Time                   (getCurrentTime)
 import Database.Persist.Sql        (ConnectionPool, SqlBackend, runSqlPool)
@@ -10,23 +11,15 @@ import Yesod.Core
 import Yesod.Form                  (FormMessage, defaultFormMessage)
 import Yesod.Persist               (YesodPersist (..), YesodPersistBackend)
 
--- ---------------------------------------------------------------------------
--- Foundation type
--- ---------------------------------------------------------------------------
-
 data App = App
   { appConnPool :: ConnectionPool
   }
 
 mkYesod "App" [parseRoutes|
-/              HomeR      GET
-/survey/#Text  SurveyR    GET POST
-/analytics     AnalyticsR GET
+/                    HomeR       GET
+/survey/#Text        SurveyR     GET POST
+/analytics/#Text     AnalyticsR  GET
 |]
-
--- ---------------------------------------------------------------------------
--- Instances
--- ---------------------------------------------------------------------------
 
 instance Yesod App
 
@@ -39,10 +32,6 @@ instance YesodPersist App where
 instance RenderMessage App FormMessage where
   renderMessage _ _ = defaultFormMessage
 
--- ---------------------------------------------------------------------------
--- Handlers (stubs — fully wired in Phase 4)
--- ---------------------------------------------------------------------------
-
 getHomeR :: Handler Html
 getHomeR = defaultLayout [whamlet|<p>Survey platform|]
 
@@ -50,7 +39,7 @@ getSurveyR :: Text -> Handler Html
 getSurveyR sid =
   defaultLayout [whamlet|
     <h1>Survey #{sid}
-    <p>Survey rendering will be wired in Phase 4.
+    <p>Survey rendering will be wired in Phase 8.
   |]
 
 postSurveyR :: Text -> Handler Html
@@ -60,9 +49,8 @@ postSurveyR sid = do
     <p>Submission received for survey #{sid} at #{show now}.
   |]
 
-getAnalyticsR :: Handler Html
-getAnalyticsR =
-  defaultLayout [whamlet|
-    <h1>Analytics
-    <p>Analytics queries will be wired in Phase 4.
-  |]
+-- | Analytics endpoint — returns JSON.
+-- Full DB query wired in Phase 8.
+getAnalyticsR :: Text -> Handler Value
+getAnalyticsR _sid =
+  returnJson (object ["questions" .= ([] :: [Value])])

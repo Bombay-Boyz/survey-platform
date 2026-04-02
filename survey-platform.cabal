@@ -40,6 +40,7 @@ library
     Logic.Engine
     Analytics.Engine
     Analytics.Query
+    Analytics.Response
     Analytics.CSV
     Cache
     Distribution.Email
@@ -94,6 +95,7 @@ test-suite survey-test
     Analytics.CSVSpec
     Analytics.EngineSpec
     Analytics.QuerySpec
+    Analytics.ResponseSpec
     Distribution.CampaignSpec
     Cache.CacheSpec
     Submission.PipelineSpec
@@ -106,6 +108,7 @@ test-suite survey-test
     uuid,
     time,
     stm,
+    aeson,
     persistent,
     persistent-sqlite,
     monad-logger,
