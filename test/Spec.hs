@@ -8,6 +8,7 @@ import qualified Analytics.EngineSpec      as Engine
 import qualified Analytics.QuerySpec       as Query
 import qualified Distribution.CampaignSpec as Campaign
 import qualified Cache.CacheSpec           as Cache
+import qualified Submission.PipelineSpec   as Pipeline
 
 main :: IO ()
 main = hspec $ do
@@ -18,3 +19,4 @@ main = hspec $ do
   Query.spec
   Campaign.spec
   Cache.spec
+  Pipeline.spec

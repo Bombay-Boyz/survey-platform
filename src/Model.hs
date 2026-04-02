@@ -25,7 +25,7 @@ SurveyRecord sql=survey_record
   version     Int
   createdAt   UTCTime
   UniqueExternalSurveyId externalId
-  deriving Show
+  deriving Show Eq
 
 SubmissionRecord sql=submission_record
   surveyId     SurveyRecordId
@@ -33,14 +33,14 @@ SubmissionRecord sql=submission_record
   submittedAt  UTCTime
   respondentId Text Maybe
   UniqueExternalSubmissionId externalId
-  deriving Show
+  deriving Show Eq
 
 AnswerRecord sql=answer_record
   submissionId SubmissionRecordId
   questionId   Text
   answerType   Text
   answerValue  Text
-  deriving Show
+  deriving Show Eq
 |]
 
 encodeAnswer :: Answer -> (Text, Text)

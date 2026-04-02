@@ -43,6 +43,7 @@ library
     Analytics.CSV
     Cache
     Distribution.Email
+    Submission.Pipeline
   build-depends:
     base                    >= 4.18,
     containers              >= 0.6,
@@ -95,6 +96,7 @@ test-suite survey-test
     Analytics.QuerySpec
     Distribution.CampaignSpec
     Cache.CacheSpec
+    Submission.PipelineSpec
   build-depends:
     base,
     survey-platform,
@@ -104,6 +106,9 @@ test-suite survey-test
     uuid,
     time,
     stm,
+    persistent,
+    persistent-sqlite,
+    monad-logger,
     hspec            >= 2.11,
     hspec-hedgehog   >= 0.0.1,
     hedgehog         >= 1.4,
