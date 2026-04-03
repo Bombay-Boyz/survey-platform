@@ -10,6 +10,7 @@ import qualified Analytics.ResponseSpec    as Response
 import qualified Distribution.CampaignSpec as Campaign
 import qualified Cache.CacheSpec           as Cache
 import qualified Submission.PipelineSpec   as Pipeline
+import qualified Submission.StoreSpec      as Store
 
 main :: IO ()
 main = hspec $ do
@@ -22,3 +23,4 @@ main = hspec $ do
   Campaign.spec
   Cache.spec
   Pipeline.spec
+  Store.spec

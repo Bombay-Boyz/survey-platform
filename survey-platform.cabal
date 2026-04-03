@@ -41,10 +41,13 @@ library
     Analytics.Engine
     Analytics.Query
     Analytics.Response
+    Analytics.Store
     Analytics.CSV
     Cache
     Distribution.Email
     Submission.Pipeline
+    Submission.Store
+    Utils.Conversion
   build-depends:
     base                    >= 4.18,
     containers              >= 0.6,
@@ -99,9 +102,11 @@ test-suite survey-test
     Distribution.CampaignSpec
     Cache.CacheSpec
     Submission.PipelineSpec
+    Submission.StoreSpec
   build-depends:
     base,
     survey-platform,
+    transformers,
     containers,
     text,
     bytestring,

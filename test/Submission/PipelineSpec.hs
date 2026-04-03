@@ -4,7 +4,7 @@ import qualified Data.Map.Strict   as Map
 import Data.Time                   (UTCTime (..), fromGregorian,
                                     secondsToDiffTime)
 import Data.UUID                   (fromWords)
-import Database.Persist.Sql        (fromSqlKey, toSqlKey)
+import Database.Persist.Sql        (fromSqlKey)
 
 import Test.Hspec
 
@@ -16,9 +16,9 @@ import Model                       (answerRecordAnswerType,
                                     answerRecordSubmissionId,
                                     submissionRecordExternalId,
                                     submissionRecordRespondentId,
-                                    submissionRecordSubmittedAt,
-                                    SurveyRecordId)
+                                    submissionRecordSubmittedAt)
 import Submission.Pipeline
+import Utils.Conversion            (placeholderSubmissionRecordId)
 
 -- ---------------------------------------------------------------------------
 -- Fixed test data
@@ -42,14 +42,13 @@ twoAnswers = SubmissionAnswers
 emptyAnswers :: SubmissionAnswers
 emptyAnswers = SubmissionAnswers Map.empty
 
--- We use toSqlKey 1 for the survey FK — the exact value doesn't matter
--- for pipeline tests since we only test the pure logic.
-surveyKey :: SurveyRecordId
-surveyKey = toSqlKey 1
+-- Use domain SurveyId instead of DB key
+surveyId :: SurveyId
+surveyId = SurveyId (fromWords 0 0 0 1)
   
 input :: SubmissionAnswers -> SubmissionInput
 input ans = SubmissionInput
-  { siSurveyDbId   = surveyKey
+  { siSurveyDbId   = surveyId
   , siExternalId   = "ext-001"
   , siSubmittedAt  = epoch
   , siRespondentId = Nothing
