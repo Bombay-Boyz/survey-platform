@@ -34,6 +34,7 @@ library
     Types.Logic
     Types.Survey
     Types.Campaign
+    Types.Auth
     Model
     Forms.Survey
     Foundation
@@ -43,6 +44,7 @@ library
     Analytics.Response
     Analytics.Store
     Analytics.CSV
+    Auth.Authorise
     Cache
     Distribution.Email
     Submission.Pipeline
@@ -71,7 +73,8 @@ library
     monad-logger            >= 0.3,
     resource-pool           >= 0.4,
     mime-mail               >= 0.5,
-    smtp-mail               >= 0.3
+    smtp-mail               >= 0.3,
+    transformers
 
 executable survey-platform
   import:           shared-extensions
@@ -99,6 +102,7 @@ test-suite survey-test
     Analytics.EngineSpec
     Analytics.QuerySpec
     Analytics.ResponseSpec
+    Auth.AuthoriseSpec
     Distribution.CampaignSpec
     Cache.CacheSpec
     Submission.PipelineSpec
@@ -106,7 +110,6 @@ test-suite survey-test
   build-depends:
     base,
     survey-platform,
-    transformers,
     containers,
     text,
     bytestring,
@@ -120,4 +123,5 @@ test-suite survey-test
     hspec            >= 2.11,
     hspec-hedgehog   >= 0.0.1,
     hedgehog         >= 1.4,
-    QuickCheck       >= 2.14
+    QuickCheck       >= 2.14,
+    transformers
