@@ -1,17 +1,18 @@
 module Main (main) where
 
 import Test.Hspec
-import qualified Model.SurveySpec          as Survey
-import qualified Logic.EngineSpec          as Logic
-import qualified Analytics.CSVSpec         as CSV
-import qualified Analytics.EngineSpec      as Engine
-import qualified Analytics.QuerySpec       as Query
-import qualified Analytics.ResponseSpec    as Response
-import qualified Auth.AuthoriseSpec        as Authorise
-import qualified Distribution.CampaignSpec as Campaign
-import qualified Cache.CacheSpec           as Cache
-import qualified Submission.PipelineSpec   as Pipeline
-import qualified Submission.StoreSpec      as Store
+import qualified Model.SurveySpec            as Survey
+import qualified Logic.EngineSpec            as Logic
+import qualified Analytics.CSVSpec           as CSV
+import qualified Analytics.EngineSpec        as Engine
+import qualified Analytics.QuerySpec         as Query
+import qualified Analytics.ResponseSpec      as Response
+import qualified Auth.AuthoriseSpec          as Authorise
+import qualified Distribution.CampaignSpec   as Campaign
+import qualified Cache.CacheSpec             as Cache
+import qualified Submission.PipelineSpec     as Pipeline
+import qualified Submission.StoreSpec        as Store
+import qualified Foundation.HandlerSpec      as Handler
 
 main :: IO ()
 main = hspec $ do
@@ -26,3 +27,4 @@ main = hspec $ do
   Cache.spec
   Pipeline.spec
   Store.spec
+  Handler.spec

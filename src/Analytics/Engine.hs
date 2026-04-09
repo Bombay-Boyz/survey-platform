@@ -2,6 +2,7 @@ module Analytics.Engine
   ( -- * Normalized answer
     NormalizedAnswer (..)
   , normalize
+  , answerToValue
 
     -- * Filter DSL
   , Filter (..)

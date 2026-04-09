@@ -8,6 +8,7 @@ module Types.Survey
   , Answer (..)
   , SubmissionAnswers (..)
   , validateSurvey
+  , allQuestions
   ) where
 
 import qualified Data.Set           as Set
@@ -16,6 +17,10 @@ import Data.List.NonEmpty           (NonEmpty)
 import qualified Data.List.NonEmpty as NE
 import Data.Map.Strict              (Map)
 import Data.Text                    (Text)
+import Data.Aeson                   (ToJSON (..), FromJSON (..), (.=), (.:), (.:?),
+                                     withObject, object, withText)
+import Data.Aeson.Types             (Parser)
+import qualified Data.Aeson         as Aeson
 
 import Types.Core
 import Types.Logic (Rule)
@@ -44,6 +49,26 @@ instance Eq AnyQuestionType where
   AnyQT QNumber     == AnyQT QNumber     = True
   _                 == _                 = False
 
+instance ToJSON AnyQuestionType where
+  toJSON (AnyQT QText)        = object ["tag" .= ("text"   :: Text)]
+  toJSON (AnyQT (QChoice os)) = object ["tag" .= ("choice" :: Text), "options" .= NE.toList os]
+  toJSON (AnyQT (QRating n))  = object ["tag" .= ("rating" :: Text), "max" .= n]
+  toJSON (AnyQT QNumber)      = object ["tag" .= ("number" :: Text)]
+
+instance FromJSON AnyQuestionType where
+  parseJSON = withObject "AnyQuestionType" $ \o -> do
+    tag <- o .: "tag" :: Parser Text
+    case tag of
+      "text"   -> pure (AnyQT QText)
+      "choice" -> do
+        opts <- o .: "options"
+        case NE.nonEmpty opts of
+          Nothing -> fail "QChoice requires at least one option"
+          Just ne -> pure (AnyQT (QChoice ne))
+      "rating" -> AnyQT . QRating <$> o .: "max"
+      "number" -> pure (AnyQT QNumber)
+      _        -> fail ("unknown question type tag: " ++ show tag)
+
 data Question = Question
   { questionId       :: QuestionId
   , questionLabel    :: Text
@@ -51,11 +76,43 @@ data Question = Question
   , questionRequired :: Bool
   } deriving (Eq, Show)
 
+instance ToJSON Question where
+  toJSON q = object
+    [ "id"       .= questionId       q
+    , "label"    .= questionLabel    q
+    , "type"     .= questionType     q
+    , "required" .= questionRequired q
+    ]
+
+instance FromJSON Question where
+  parseJSON = withObject "Question" $ \o ->
+    Question
+      <$> o .:  "id"
+      <*> o .:  "label"
+      <*> o .:  "type"
+      <*> o .:  "required"
+
 data Page = Page
   { pageId        :: PageId
   , pageTitle     :: Maybe Text
   , pageQuestions :: NonEmpty Question
   } deriving (Eq, Show)
+
+instance ToJSON Page where
+  toJSON p = object
+    [ "id"        .= pageId        p
+    , "title"     .= pageTitle     p
+    , "questions" .= NE.toList (pageQuestions p)
+    ]
+
+instance FromJSON Page where
+  parseJSON = withObject "Page" $ \o -> do
+    pid  <- o .:  "id"
+    ttl  <- o .:? "title"
+    qs   <- o .:  "questions"
+    case NE.nonEmpty qs of
+      Nothing -> fail "Page requires at least one question"
+      Just ne -> pure (Page pid ttl ne)
 
 data Survey = Survey
   { surveyId    :: SurveyId
@@ -63,6 +120,23 @@ data Survey = Survey
   , surveyPages :: NonEmpty Page
   , surveyRules :: [Rule]
   } deriving (Eq, Show)
+
+instance ToJSON Survey where
+  toJSON s = object
+    [ "id"    .= surveyId    s
+    , "title" .= surveyTitle s
+    , "pages" .= NE.toList (surveyPages s)
+    -- rules omitted for now — not needed for GET/POST form flow
+    ]
+
+instance FromJSON Survey where
+  parseJSON = withObject "Survey" $ \o -> do
+    sid   <- o .: "id"
+    title <- o .: "title"
+    pages <- o .: "pages"
+    case NE.nonEmpty pages of
+      Nothing -> fail "Survey requires at least one page"
+      Just ne -> pure (Survey sid title ne [])
 
 data Answer
   = AText   Text
